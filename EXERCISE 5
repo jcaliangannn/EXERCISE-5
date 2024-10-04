@@ -1,0 +1,31 @@
+<form id="ajaxForm">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required minlength="3">
+  
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required>
+  
+  <button type="submit">Submit</button>
+</form>
+
+<div id="responseMessage"></div>
+
+<script>
+  document.getElementById('ajaxForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    const formData = new FormData(this);
+    
+    fetch('/submit', { // Replace with your server endpoint
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('responseMessage').innerText = data;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+</script>
